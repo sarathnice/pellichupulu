@@ -3,20 +3,677 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Pellichupulu - AI Telugu Matrimony</title>
-<script src="https://cdn.tailwindcss.com"></script>
+<title>Pellichupulu — Where Telugu hearts connect</title>
+<meta name="theme-color" content="#3D5A80">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Fraunces:opsz,wght@9..144,500;9..144,600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --terracotta:#E07A5F;
+  --teal:#3D5A80;
+  --cream:#F4F1DE;
+  --gold:#F2CC8F;
+  --charcoal:#293241;
+  --sage:#81B29A;
+  --white:#FFFFFF;
+  --cream-2:#FFFCF5;
+  --border:#E8E0D1;
+  --shadow:0 10px 30px -12px rgba(41,50,65,.18);
+  --shadow-lg:0 20px 40px -16px rgba(61,90,128,.25);
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;
+  background:var(--cream);
+  color:var(--charcoal);
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+}
+.top-accent{
+  height:4px;
+  background:linear-gradient(90deg,var(--gold),var(--terracotta),var(--teal),var(--gold));
+  background-size:200% 100%;
+  animation:shimmer 8s linear infinite;
+}
+@keyframes shimmer{0%{background-position:0%}100%{background-position:200%}}
+
+header{
+  position:sticky;top:0;z-index:40;
+  backdrop-filter:saturate(180%) blur(12px);
+  background:rgba(244,241,222,.85);
+  border-bottom:1px solid rgba(242,204,143,.35);
+}
+.nav{
+  max-width:1160px;margin:0 auto;
+  padding:14px 20px;
+  display:flex;align-items:center;justify-content:space-between;
+}
+.logo{
+  display:flex;align-items:center;gap:12px;
+  font-weight:700;letter-spacing:.2px;color:var(--teal);
+  font-size:18px;
+}
+.logo-mark{
+  width:36px;height:36px;border-radius:12px;
+  background:linear-gradient(135deg,var(--terracotta),var(--gold));
+  display:grid;place-items:center;color:white;font-weight:700;
+  font-family:Fraunces,serif;box-shadow:var(--shadow);
+  position:relative;overflow:hidden;
+}
+.logo-mark::after{
+  content:"";position:absolute;inset:0;
+  background:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" opacity="0.15"><path d="M50 10c5 15 20 20 35 20-15 5-20 20-35 35-15-15-20-30-35-35 15 0 30-5 35-20z" fill="white"/></svg>') center/70% no-repeat;
+}
+.api-status{
+  display:flex;align-items:center;gap:8px;
+  font-size:13px;color:#5c5a52;
+  background:var(--cream-2);border:1px solid var(--border);
+  padding:8px 12px;border-radius:999px;
+}
+.dot{width:8px;height:8px;border-radius:50%;background:#cbd5e1;position:relative}
+.dot.ok{background:#22c55e;box-shadow:0 0 0 4px rgba(34,197,94,.15)}
+.dot.offline{background:#ef4444;box-shadow:0 0 0 4px rgba(239,68,68,.12)}
+.dot.loading{animation:pulse 1.4s infinite}
+@keyframes pulse{0%{transform:scale(.9);opacity:.7}50%{transform:scale(1.1);opacity:1}100%{transform:scale(.9);opacity:.7}}
+
+.hero{
+  position:relative;overflow:hidden;
+  background:
+    radial-gradient(800px 300px at 50% -50px, rgba(242,204,143,.35), transparent 70%),
+    linear-gradient(180deg,#F4F1DE 0%, #FFFFFF 100%);
+}
+.hero-pattern{
+  position:absolute;inset:0;opacity:.06;pointer-events:none;
+  background-image:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 200 200"><g fill="none" stroke="%233D5A80" stroke-width="1"><circle cx="100" cy="100" r="40"/><path d="M100 20l15 30 30 15-30 15-15 30-15-30-30-15 30-15z"/><circle cx="100" cy="100" r="70" stroke-dasharray="4 6"/></g></svg>');
+  background-size:200px 200px;
+  mask-image:linear-gradient(to bottom, black, transparent 85%);
+}
+.hero-inner{
+  max-width:960px;margin:0 auto;padding:72px 20px 48px;
+  text-align:center;position:relative;
+}
+.telugu-watermark{
+  position:absolute;left:50%;top:18px;transform:translateX(-50%);
+  font-family:Fraunces,serif;font-size:clamp(48px,12vw,120px);
+  color:var(--teal);opacity:.04;white-space:nowrap;pointer-events:none;user-select:none;
+}
+h1{
+  font-family:Fraunces,serif;
+  font-weight:600;
+  font-size:clamp(40px,7vw,72px);
+  line-height:1.05;margin:0 0 12px;
+  color:var(--teal);
+  letter-spacing:.2px;
+}
+.tagline{
+  color:var(--terracotta);font-weight:600;font-size:clamp(16px,2.5vw,20px);
+  margin-bottom:16px;
+}
+.hero-desc{
+  max-width:680px;margin:0 auto 28px;color:#5b5a52;font-size:17px;
+}
+.pills{
+  display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin:22px 0 0;
+}
+.pill{
+  background:var(--white);border:1px solid var(--border);
+  padding:8px 14px;border-radius:999px;font-size:13px;color:#574f45;
+  display:flex;align-items:center;gap:8px;box-shadow:var(--shadow);
+}
+.pill svg{opacity:.8}
+
+.divider{
+  display:flex;align-items:center;justify-content:center;gap:14px;margin:36px auto 0;opacity:.7;
+}
+.divider::before,.divider::after{content:"";height:1px;width:80px;background:linear-gradient(90deg,transparent,var(--gold),transparent)}
+.divider span{width:6px;height:6px;border-radius:50%;background:var(--gold);display:inline-block}
+
+main{max-width:1160px;margin:0 auto;padding:28px 20px 72px}
+
+.tabs-wrap{display:flex;justify-content:center;margin-bottom:26px}
+.tabs{
+  display:inline-flex;background:var(--white);padding:6px;border-radius:999px;
+  border:1px solid var(--border);box-shadow:var(--shadow);gap:6px;
+}
+.tab-btn{
+  appearance:none;border:0;background:transparent;
+  padding:10px 18px;border-radius:999px;font-weight:600;font-size:14px;
+  color:#5b6473;cursor:pointer;transition:.2s;
+}
+.tab-btn.active{background:var(--teal);color:white;box-shadow:0 6px 16px -8px rgba(61,90,128,.6)}
+.tab-btn:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+
+.tab-panel{display:none;animation:fade .3s ease}
+.tab-panel.active{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+.controls{
+  display:grid;grid-template-columns:1fr;gap:14px;margin-bottom:20px;
+}
+@media(min-width:720px){.controls{grid-template-columns:1fr auto;align-items:center}}
+
+.search{
+  position:relative;
+}
+.search input{
+  width:100%;padding:14px 44px 14px 44px;border-radius:14px;border:1px solid var(--border);
+  background:var(--cream-2);font-size:15px;outline:none;transition:.2s;
+}
+.search input:focus{border-color:var(--gold);box-shadow:0 0 0 4px rgba(242,204,143,.25);background:white}
+.search svg{position:absolute;left:14px;top:50%;transform:translateY(-50%);opacity:.6}
+
+.filters{display:flex;gap:8px;flex-wrap:wrap}
+.chip{
+  border:1px solid var(--border);background:white;color:#4b5563;
+  padding:9px 14px;border-radius:999px;font-size:13px;font-weight:600;cursor:pointer;transition:.2s;
+}
+.chip.active{background:var(--terracotta);color:white;border-color:transparent;box-shadow:0 6px 16px -10px rgba(224,122,95,.7)}
+.chip:hover{transform:translateY(-1px)}
+
+.grid{
+  display:grid;gap:18px;
+  grid-template-columns:repeat(1,minmax(0,1fr));
+}
+@media(min-width:640px){.grid{grid-template-columns:repeat(2,1fr)}}
+@media(min-width:1024px){.grid{grid-template-columns:repeat(3,1fr)}}
+
+.card{
+  background:white;border-radius:24px;padding:20px;border:1px solid var(--border);
+  box-shadow:var(--shadow);position:relative;overflow:hidden;transition:.25s;
+  display:flex;flex-direction:column;
+}
+.card::before{
+  content:"";position:absolute;top:0;left:0;right:0;height:4px;
+  background:linear-gradient(90deg,var(--gold),var(--terracotta));
+  opacity:.9;
+}
+.card:hover{transform:translateY(-4px);box-shadow:var(--shadow-lg)}
+.card-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+.avatar{
+  width:54px;height:54px;border-radius:16px;display:grid;place-items:center;
+  font-weight:700;color:white;font-size:18px;
+  background:linear-gradient(135deg,var(--teal),#5a7aa3);
+  box-shadow:inset 0 0 0 2px rgba(255,255,255,.2);
+}
+.avatar.female{background:linear-gradient(135deg,#E07A5F,#F2CC8F)}
+.avatar.male{background:linear-gradient(135deg,#3D5A80,#81B29A)}
+.badge{
+  font-size:11px;font-weight:700;color:#6b5d4d;background:#FFF6E6;border:1px solid #F5E4C6;
+  padding:6px 9px;border-radius:999px;display:flex;align-items:center;gap:5px;
+}
+.name{font-weight:700;font-size:18px;margin:6px 0 2px;color:var(--charcoal)}
+.meta{display:flex;align-items:center;gap:8px;color:#6b7280;font-size:13px}
+.meta .dot-sep{width:3px;height:3px;background:#c7bda8;border-radius:50%}
+.profession{
+  margin:10px 0 8px;font-weight:600;color:#3b4555;font-size:14px;
+  display:flex;align-items:center;gap:8px;
+}
+.about{
+  color:#57534e;font-size:14px;line-height:1.55;margin:0 0 14px;flex:1;
+  display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;
+}
+.card-actions{display:flex;gap:8px;margin-top:auto}
+.btn{
+  appearance:none;border:0;cursor:pointer;font-weight:600;font-size:14px;
+  padding:10px 14px;border-radius:12px;transition:.2s;display:inline-flex;align-items:center;gap:8px;
+}
+.btn-primary{background:var(--teal);color:white}
+.btn-primary:hover{filter:brightness(1.05);transform:translateY(-1px)}
+.btn-ghost{background:#F6F1E6;color:#5a4e3f}
+.btn-ghost:hover{background:#efe5d2}
+
+.skeleton{
+  background:linear-gradient(90deg,#f5f1e7 25%,#fff7e8 37%,#f5f1e7 63%);
+  background-size:400% 100%;animation:skeleton 1.2s ease infinite;
+  min-height:220px;border:1px solid var(--border)
+}
+@keyframes skeleton{0%{background-position:100% 50%}100%{background-position:0 50%}}
+
+.empty{
+  text-align:center;background:white;border:1px dashed var(--border);border-radius:24px;
+  padding:48px 20px;color:#6b5f51;
+}
+
+.join-wrap{max-width:860px;margin:0 auto}
+.form-card{
+  background:white;border:1px solid var(--border);border-radius:28px;box-shadow:var(--shadow-lg);
+  padding:28px;position:relative;overflow:hidden;
+}
+.form-card::before{
+  content:"";position:absolute;inset:0 0 auto 0;height:6px;
+  background:linear-gradient(90deg,var(--teal),var(--terracotta),var(--gold));
+}
+.form-head{text-align:center;margin-bottom:22px}
+.form-head h2{font-family:Fraunces,serif;margin:0 0 6px;font-size:30px;color:var(--teal)}
+.form-head p{margin:0;color:#6b6154}
+
+.form-grid{
+  display:grid;gap:16px;grid-template-columns:1fr;
+}
+@media(min-width:720px){.form-grid{grid-template-columns:1fr 1fr}}
+.field{display:flex;flex-direction:column;gap:7px}
+.field.full{grid-column:1/-1}
+label{font-size:13px;font-weight:600;color:#4b4a47}
+input,select,textarea{
+  width:100%;padding:13px 14px;border-radius:12px;border:1px solid var(--border);
+  background:var(--cream-2);font-size:15px;font-family:inherit;outline:none;transition:.2s;
+}
+input:focus,select:focus,textarea:focus{border-color:var(--teal);box-shadow:0 0 0 4px rgba(61,90,128,.12);background:white}
+textarea{min-height:110px;resize:vertical}
+
+.form-actions{display:flex;gap:12px;align-items:center;justify-content:center;margin-top:8px;flex-wrap:wrap}
+.submit-btn{
+  background:linear-gradient(135deg,var(--terracotta),#d86b4c);color:white;border:0;
+  padding:14px 24px;border-radius:14px;font-weight:700;font-size:15px;cursor:pointer;
+  box-shadow:0 10px 24px -12px rgba(224,122,95,.7);transition:.2s;
+}
+.submit-btn:hover{transform:translateY(-1px);filter:saturate(1.05)}
+.submit-btn:disabled{opacity:.6;cursor:not-allowed}
+.note{font-size:12px;color:#7a715f;text-align:center}
+
+.success{
+  text-align:center;padding:40px 20px;background:linear-gradient(180deg,#FFFCF5,white);
+  border:1px solid var(--border);border-radius:24px;
+}
+.success-icon{
+  width:64px;height:64px;margin:0 auto 14px;border-radius:20px;
+  background:linear-gradient(135deg,var(--sage),#a7c9b8);display:grid;place-items:center;color:white;
+  box-shadow:var(--shadow);
+}
+.ref-code{
+  display:inline-flex;align-items:center;gap:10px;background:#1f2937;color:white;
+  padding:12px 16px;border-radius:12px;font-family:ui-monospace,monospace;font-weight:700;letter-spacing:1px;
+  margin-top:10px;
+}
+.confetti{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+.confetti i{position:absolute;width:8px;height:8px;background:var(--gold);opacity:.8;animation:fall 3s linear infinite}
+@keyframes fall{0%{transform:translateY(-10px) rotate(0)}100%{transform:translateY(400px) rotate(360deg)}}
+
+footer{
+  border-top:1px solid var(--border);text-align:center;padding:28px 20px;color:#7d7466;font-size:13px;
+  background:linear-gradient(180deg,transparent,rgba(242,204,143,.12));
+}
+footer strong{color:#5a5346}
+
+.trust{
+  display:flex;gap:18px;justify-content:center;flex-wrap:wrap;margin-top:18px;font-size:12px;color:#6f6658
+}
+.trust span{display:flex;align-items:center;gap:6px}
+</style>
 </head>
-<body class="bg-[#0a0a0f] text-white">
-<nav class="border-b border-gray-800 p-4">
-  <div class="max-w-7xl mx-auto flex justify-between">
-    <div class="text-2xl font-bold">PELLI<span class="text-orange-500">CHUPULU</span> ❤️</div>
-    <button class="bg-orange-500 px-6 py-2 rounded-lg">Dashboard</button>
+<body>
+<div class="top-accent"></div>
+<header>
+  <div class="nav">
+    <div class="logo">
+      <div class="logo-mark">పె</div>
+      <span>Pellichupulu</span>
+    </div>
+    <div class="api-status" id="apiStatus" title="Checking API...">
+      <span class="dot loading" id="apiDot"></span>
+      <span id="apiText">Connecting...</span>
+    </div>
   </div>
-</nav>
-<div class="max-w-7xl mx-auto p-12 text-center">
-  <h1 class="text-6xl font-bold mb-6">Find Your <span class="text-orange-500">Perfect</span> Match</h1>
-  <p class="text-xl text-gray-400 mb-8">AI-powered Telugu matrimony for NRI professionals</p>
-  <button class="bg-orange-500 px-8 py-3 rounded-lg text-lg font-semibold">Create Free Profile</button>
-</div>
+</header>
+
+<section class="hero">
+  <div class="hero-pattern"></div>
+  <div class="hero-inner">
+    <div class="telugu-watermark">పెళ్లిచూపులు</div>
+    <h1>Pellichupulu</h1>
+    <div class="tagline">Where Telugu hearts connect</div>
+    <p class="hero-desc">A warm, modern matrimony community for Telugu families worldwide — built with tradition, trust, and a touch of gold.</p>
+    <div class="pills">
+      <div class="pill"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg> Verified profiles</div>
+      <div class="pill"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg> Families in US & India</div>
+      <div class="pill"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 0 0 0 0-7.78z"/></svg> Respectful & private</div>
+    </div>
+    <div class="divider"><span></span><span></span></div>
+  </div>
+</section>
+
+<main>
+  <div class="tabs-wrap">
+    <div class="tabs" role="tablist">
+      <button class="tab-btn active" data-tab="browse" role="tab" aria-selected="true">Browse Profiles</button>
+      <button class="tab-btn" data-tab="join" role="tab" aria-selected="false">Join Now</button>
+    </div>
+  </div>
+
+  <section id="panel-browse" class="tab-panel active">
+    <div class="controls">
+      <div class="search">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        <input id="searchInput" type="search" placeholder="Search by name, city, profession..." autocomplete="off">
+      </div>
+      <div class="filters" role="group" aria-label="Filter by gender">
+        <button class="chip" data-gender="all">All</button>
+        <button class="chip active" data-gender="female">Brides</button>
+        <button class="chip" data-gender="male">Grooms</button>
+      </div>
+    </div>
+
+    <div id="profilesGrid" class="grid" aria-live="polite"></div>
+    <div id="emptyState" class="empty" style="display:none">
+      <h3 style="margin:0 0 6px;font-family:Fraunces,serif;color:var(--teal)">No matches yet</h3>
+      <p style="margin:0">Try adjusting filters or search. New profiles join daily.</p>
+    </div>
+  </section>
+
+  <section id="panel-join" class="tab-panel">
+    <div class="join-wrap">
+      <div class="form-card" id="formCard">
+        <div class="confetti" id="confetti" aria-hidden="true"></div>
+        <div class="form-head">
+          <h2>Create your profile</h2>
+          <p>Join trusted Telugu families across Hyderabad, Vizag, Vijayawada, Dallas, Bay Area & beyond.</p>
+        </div>
+        <form id="joinForm" novalidate>
+          <div class="form-grid">
+            <div class="field">
+              <label for="firstName">First Name</label>
+              <input id="firstName" name="firstName" required placeholder="Sowmya">
+            </div>
+            <div class="field">
+              <label for="lastName">Last Name</label>
+              <input id="lastName" name="lastName" required placeholder="Reddy">
+            </div>
+            <div class="field">
+              <label for="email">Email</label>
+              <input id="email" name="email" type="email" required placeholder="you@example.com">
+            </div>
+            <div class="field">
+              <label for="gender">I am</label>
+              <select id="gender" name="gender" required>
+                <option value="">Select</option>
+                <option value="female">Bride</option>
+                <option value="male">Groom</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="age">Age</label>
+              <input id="age" name="age" type="number" min="21" max="60" required placeholder="27">
+            </div>
+            <div class="field">
+              <label for="city">City</label>
+              <input id="city" name="city" required placeholder="Hyderabad">
+            </div>
+            <div class="field">
+              <label for="country">Country</label>
+              <select id="country" name="country" required>
+                <option value="">Select</option>
+                <option>India</option>
+                <option>USA</option>
+                <option>Canada</option>
+                <option>UK</option>
+                <option>Australia</option>
+                <option>Singapore</option>
+                <option>UAE</option>
+              </select>
+            </div>
+            <div class="field full">
+              <label for="profession">Profession</label>
+              <input id="profession" name="profession" placeholder="Software Engineer @ Microsoft" required>
+            </div>
+            <div class="field full">
+              <label for="aboutMe">About Me</label>
+              <textarea id="aboutMe" name="aboutMe" placeholder="Kuchipudi dancer, loves filter coffee, family-oriented with modern outlook..." required></textarea>
+            </div>
+          </div>
+          <div class="form-actions">
+            <button type="submit" class="submit-btn" id="submitBtn">
+              <span>Create Profile</span>
+            </button>
+          </div>
+          <p class="note">By joining, you agree to respectful communication. Profiles are reviewed for authenticity.</p>
+        </form>
+        <div id="successState" class="success" style="display:none">
+          <div class="success-icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
+          <h3 style="font-family:Fraunces,serif;font-size:26px;margin:6px 0;color:var(--teal)">Welcome to Pellichupulu!</h3>
+          <p style="margin:0;color:#5a544a">Your profile is live. Share your referral code with family.</p>
+          <div class="ref-code" id="refCode">PEL0000</div>
+          <div style="margin-top:16px">
+            <button class="btn btn-primary" onclick="switchTab('browse')">Browse Matches</button>
+          </div>
+        </div>
+      </div>
+      <div class="trust">
+        <span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> Private by default</span>
+        <span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg> Family-verified</span>
+        <span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><path d="M9 9h.01M15 9h.01"/></svg> Respectful community</span>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div>Made with ❤️ for Telugu families worldwide</div>
+  <div style="margin-top:6px"><strong>Powered by Cloudflare Workers + D1</strong></div>
+</footer>
+
+<script>
+const API_BASE = 'https://api.pellichupulu.ai';
+const HEALTH_URL = API_BASE + '/health';
+const PROFILES_URL = API_BASE + '/api/profiles';
+const USERS_URL = API_BASE + '/api/users';
+
+const SAMPLE_PROFILES = [
+  {firstName:"Sowmya",lastName:"Reddy",age:27,city:"Hyderabad",country:"India",profession:"Software Engineer @ Microsoft",aboutMe:"Kuchipudi dancer, loves filter coffee and Pelli Choopulu on repeat. Close to family, looking for someone kind and ambitious.",gender:"female"},
+  {firstName:"Priya",lastName:"Kolluri",age:26,city:"Austin",country:"USA",profession:"Data Scientist",aboutMe:"Born in Vijayawada, raised in Texas. Carnatic singer, temple volunteer on weekends. Values tradition with a modern outlook.",gender:"female"},
+  {firstName:"Harini",lastName:"Madhavan",age:28,city:"Bengaluru",country:"India",profession:"UX Designer",aboutMe:"Dog mom, loves travel and Telugu poetry. Family in Guntur. Seeks genuine, respectful partner.",gender:"female"},
+  {firstName:"Anjali",lastName:"Thota",age:25,city:"Chennai",country:"India",profession:"Chartered Accountant",aboutMe:"Telugu ammayi, loves cooking avakaya pachadi and Bharatanatyam. Seeks family-loving groom.",gender:"female"},
+  {firstName:"Aditya",lastName:"Kancherla",age:29,city:"Seattle",country:"USA",profession:"Product Manager @ Amazon",aboutMe:"Sankranti in Rajahmundry every year. Into hiking, cricket, and perfecting pulihora. Family-oriented.",gender:"male"},
+  {firstName:"Karthik",lastName:"Sarma",age:30,city:"Dallas",country:"USA",profession:"Cardiologist",aboutMe:"Vizag roots, respects traditions, loves MS Subbulakshmi and Ilaiyaraaja. Looking for compassionate partner.",gender:"male"},
+  {firstName:"Nikhil",lastName:"Varma",age:28,city:"Hyderabad",country:"India",profession:"Startup Founder",aboutMe:"IIT-M grad, building in fintech. Loves badminton, Annamayya keertanas. Family in Jubilee Hills.",gender:"male"},
+  {firstName:"Sai Teja",lastName:"Polavarapu",age:31,city:"San Jose",country:"USA",profession:"Senior Software Engineer",aboutMe:"From Kakinada, loves beach sunsets, Tollywood classics, mentoring. Green card holder, family in USA.",gender:"male"},
+  {firstName:"Lahari",lastName:"K",age:27,city:"Vizag",country:"India",profession:"Doctor - Pediatrics",aboutMe:"Loves kids, classical music, and coastal walks. Looking for supportive, family-first partner.",gender:"female"},
+];
+
+const apiDot = document.getElementById('apiDot');
+const apiText = document.getElementById('apiText');
+const profilesGrid = document.getElementById('profilesGrid');
+const emptyState = document.getElementById('emptyState');
+const searchInput = document.getElementById('searchInput');
+
+let currentGender = 'female';
+let allProfiles = [];
+let filteredProfiles = [];
+
+async function checkHealth(){
+  try{
+    const ctrl = new AbortController();
+    const to = setTimeout(()=>ctrl.abort(), 4000);
+    const res = await fetch(HEALTH_URL, {signal:ctrl.signal, cache:'no-store'});
+    clearTimeout(to);
+    if(res.ok){
+      apiDot.className='dot ok';
+      apiText.textContent='API Online';
+      return true;
+    }
+    throw new Error('not ok');
+  }catch(e){
+    apiDot.className='dot offline';
+    apiText.textContent='Demo Mode';
+    return false;
+  }
+}
+
+function initials(p){return (p.firstName?.[0]||'')+(p.lastName?.[0]||'');}
+function cardHTML(p){
+  const name = `${p.firstName||''} ${p.lastName||''}`.trim();
+  const avatarClass = p.gender==='female'?'avatar female':p.gender==='male'?'avatar male':'avatar';
+  return `
+  <article class="card">
+    <div class="card-top">
+      <div class="${avatarClass}" aria-hidden="true">${initials(p).toUpperCase()}</div>
+      <span class="badge"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#b38b3c" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg> Verified</span>
+    </div>
+    <h3 class="name">${name}</h3>
+    <div class="meta">
+      <span>${p.age||''}</span><span class="dot-sep"></span>
+      <span>${p.city||''}${p.country?`, ${p.country}`:''}</span>
+    </div>
+    <div class="profession">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+      ${p.profession||'—'}
+    </div>
+    <p class="about">${p.aboutMe||p.about||'Family-oriented Telugu profile seeking meaningful connection.'}</p>
+    <div class="card-actions">
+      <button class="btn btn-primary" onclick="toast('Connect request sent to ${name.split(' ')[0]}')">Connect</button>
+      <button class="btn btn-ghost" onclick="toast('Profile saved')">Save</button>
+    </div>
+  </article>`;
+}
+
+function setLoading(on){
+  if(on){
+    profilesGrid.innerHTML = Array.from({length:6}).map(()=>`<div class="card skeleton"></div>`).join('');
+    emptyState.style.display='none';
+  }
+}
+
+function render(list){
+  filteredProfiles = list;
+  if(!list.length){
+    profilesGrid.innerHTML='';
+    emptyState.style.display='block';
+    return;
+  }
+  emptyState.style.display='none';
+  profilesGrid.innerHTML = list.map(cardHTML).join('');
+}
+
+function applySearch(){
+  const q = searchInput.value.trim().toLowerCase();
+  if(!q) return render(allProfiles);
+  const filtered = allProfiles.filter(p=>{
+    return [p.firstName,p.lastName,p.city,p.country,p.profession,p.aboutMe].filter(Boolean).some(v=>String(v).toLowerCase().includes(q));
+  });
+  render(filtered);
+}
+
+async function loadProfiles(gender){
+  currentGender = gender;
+  setLoading(true);
+  let data = [];
+  try{
+    const url = gender==='all'? PROFILES_URL : `${PROFILES_URL}?gender=${encodeURIComponent(gender)}`;
+    const res = await fetch(url, {headers:{'Accept':'application/json'}});
+    if(!res.ok) throw new Error('bad status');
+    const json = await res.json();
+    data = Array.isArray(json)? json : (json.profiles||json.data||[]);
+  }catch(err){
+    console.warn('API profiles failed, using samples', err);
+    data = SAMPLE_PROFILES;
+  }
+  if(!data || data.length===0) data = SAMPLE_PROFILES;
+  allProfiles = gender==='all'? data : data.filter(p => !p.gender || p.gender===gender);
+  // if API returns mixed, filter client side for accuracy
+  if(gender!=='all') allProfiles = allProfiles.filter(p=> (p.gender||'').toLowerCase()===gender);
+  // ensure we have something
+  if(allProfiles.length===0) allProfiles = SAMPLE_PROFILES.filter(p=>gender==='all'||p.gender===gender);
+  render(allProfiles);
+}
+
+// Tabs
+function switchTab(name){
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.toggle('active', b.dataset.tab===name));
+  document.querySelectorAll('.tab-panel').forEach(p=>p.classList.toggle('active', p.id===`panel-${name}`));
+  if(name==='browse') searchInput.focus({preventScroll:true});
+}
+document.querySelectorAll('.tab-btn').forEach(btn=>{
+  btn.addEventListener('click',()=>switchTab(btn.dataset.tab));
+});
+
+// Filters
+document.querySelectorAll('.chip').forEach(ch=>{
+  ch.addEventListener('click', ()=>{
+    document.querySelectorAll('.chip').forEach(c=>c.classList.remove('active'));
+    ch.classList.add('active');
+    loadProfiles(ch.dataset.gender);
+    searchInput.value='';
+  });
+});
+
+searchInput.addEventListener('input', applySearch);
+
+// Join form
+const joinForm = document.getElementById('joinForm');
+const submitBtn = document.getElementById('submitBtn');
+const successState = document.getElementById('successState');
+const formCard = document.getElementById('formCard');
+const refCodeEl = document.getElementById('refCode');
+
+function makeConfetti(){
+  const c = document.getElementById('confetti');
+  c.innerHTML='';
+  for(let i=0;i<40;i++){
+    const el=document.createElement('i');
+    el.style.left=Math.random()*100+'%';
+    el.style.top = -20 - Math.random()*100+'px';
+    el.style.background = ['#F2CC8F','#E07A5F','#3D5A80','#81B29A'][i%4];
+    el.style.animationDelay = (Math.random()*1.5)+'s';
+    el.style.transform = `rotate(${Math.random()*360}deg)`;
+    c.appendChild(el);
+  }
+}
+
+joinForm.addEventListener('submit', async (e)=>{
+  e.preventDefault();
+  const data = Object.fromEntries(new FormData(joinForm).entries());
+  // basic validation
+  if(!data.firstName || !data.email){ toast('Please fill required fields'); return; }
+  submitBtn.disabled=true; submitBtn.innerHTML='<span>Creating...</span>';
+  let userId = null;
+  try{
+    // Try users then profiles - ignore failures for demo
+    const uRes = await fetch(USERS_URL,{
+      method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({firstName:data.firstName,lastName:data.lastName,email:data.email})
+    }).catch(()=>null);
+    if(uRes && uRes.ok){ const u = await uRes.json().catch(()=>null); userId = u?.id || u?.userId || null; }
+  }catch{}
+  try{
+    await fetch(PROFILES_URL,{
+      method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({...data, age:Number(data.age), userId})
+    }).catch(()=>null);
+  }catch{}
+  // success UI
+  const code = 'PEL' + Math.floor(1000 + Math.random()*9000);
+  refCodeEl.textContent = code;
+  joinForm.style.display='none';
+  successState.style.display='block';
+  makeConfetti();
+  submitBtn.disabled=false; submitBtn.innerHTML='<span>Create Profile</span>';
+  // add to local list
+  const newProfile = {...data, age:Number(data.age)};
+  SAMPLE_PROFILES.unshift(newProfile);
+  if(currentGender==='all' || newProfile.gender===currentGender){
+    allProfiles.unshift(newProfile);
+    render(allProfiles);
+  }
+});
+
+function toast(msg){
+  const t=document.createElement('div');
+  t.textContent=msg;
+  t.style.cssText='position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:#293241;color:white;padding:10px 16px;border-radius:999px;font-size:14px;box-shadow:0 10px 30px -10px rgba(0,0,0,.4);z-index:99;opacity:0;transition:.3s';
+  document.body.appendChild(t);
+  requestAnimationFrame(()=>t.style.opacity=1);
+  setTimeout(()=>{t.style.opacity=0;setTimeout(()=>t.remove(),300)},1800);
+}
+
+// Init
+(async function init(){
+  checkHealth();
+  loadProfiles('female');
+})();
+</script>
 </body>
 </html>

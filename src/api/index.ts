@@ -21,6 +21,18 @@ export default {
 
     if (method === 'OPTIONS') return new Response(null, { headers: cors });
 
+    // ===== HEALTH CHECK =====
+    if (path === '/health' || path === '/api/health' || path === '/') {
+      return json({ 
+        ok: true, 
+        service: 'pellichupulu-api',
+        version: '2.0',
+        time: new Date().toISOString(),
+        db: !!env.DB,
+        r2: !!env.MEDIA_BUCKET
+      });
+    }
+
     try {
       // ===== USERS =====
       if (path === '/api/users' && method === 'POST') {
@@ -226,4 +238,7 @@ function generateReferralCode(): string {
 
 interface Env {
   DB: D1Database;
+  MEDIA_BUCKET: R2Bucket;
+  ENVIRONMENT?: string;
+  R2_DOMAIN?: string;
 }
