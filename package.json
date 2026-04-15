@@ -1,0 +1,23 @@
+{
+  "name": "pellichupulu",
+  "version": "2.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "db:create": "wrangler d1 create pellichupulu-db",
+    "db:schema": "wrangler d1 execute pellichupulu-db --file=./db/schema.sql --remote",
+    "db:seed": "wrangler d1 execute pellichupulu-db --file=./db/seed.sql --remote",
+    "db:studio": "wrangler d1 execute pellichupulu-db --local",
+    "typegen": "drizzle-kit generate:sqlite"
+  },
+  "dependencies": {
+    "drizzle-orm": "^0.30.10"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20240405.0",
+    "drizzle-kit": "^0.20.14",
+    "typescript": "^5.4.5",
+    "wrangler": "^3.57.0"
+  }
+}

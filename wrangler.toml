@@ -1,0 +1,24 @@
+name = "pellichupulu-api"
+main = "src/api/index.ts"
+compatibility_date = "2026-04-15"
+compatibility_flags = ["nodejs_compat"]
+
+# D1 Database
+[[d1_databases]]
+binding = "DB"
+database_name = "pellichupulu-db"
+database_id = "REPLACE_WITH_YOUR_D1_ID"
+
+# R2 for media
+[[r2_buckets]]
+binding = "MEDIA_BUCKET"
+bucket_name = "pellichupulu-media"
+
+# R2 for backups
+[[r2_buckets]]
+binding = "BACKUP_BUCKET"
+bucket_name = "pellichupulu-media"
+
+[vars]
+ENVIRONMENT = "production"
+R2_DOMAIN = "media.pellichupulu.ai"
