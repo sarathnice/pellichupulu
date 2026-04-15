@@ -1,22 +1,17 @@
 name = "pellichupulu-api"
 main = "src/api/index.ts"
-compatibility_date = "2026-04-15"
+compatibility_date = "2024-11-01"
 compatibility_flags = ["nodejs_compat"]
 
 # D1 Database
 [[d1_databases]]
 binding = "DB"
-database_name = "pellichupulu-db"
+database_name = "pellichupulu-v2"
 database_id = "7fcca74a-ae62-46bd-a87d-76243058485c"
 
-# R2 for media
+# R2 for media (only one binding for now)
 [[r2_buckets]]
 binding = "MEDIA_BUCKET"
-bucket_name = "pellichupulu-media"
-
-# R2 for backups
-[[r2_buckets]]
-binding = "BACKUP_BUCKET"
 bucket_name = "pellichupulu-media"
 
 [vars]
