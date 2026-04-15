@@ -7,7 +7,7 @@ compatibility_flags = ["nodejs_compat"]
 [[d1_databases]]
 binding = "DB"
 database_name = "pellichupulu-db"
-database_id = "REPLACE_WITH_YOUR_D1_ID"
+database_id = "7fcca74a-ae62-46bd-a87d-76243058485c"
 
 # R2 for media
 [[r2_buckets]]

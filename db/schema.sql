@@ -302,7 +302,7 @@ CREATE TABLE IF NOT EXISTS profile_views (
   created_at TEXT DEFAULT (datetime('now')),
   FOREIGN KEY (viewer_id) REFERENCES users(id) ON DELETE CASCADE,
   FOREIGN KEY (viewed_id) REFERENCES users(id) ON DELETE CASCADE,
-  UNIQUE(viewer_id, viewed_id, date(created_at))
+  UNIQUE(viewer_id, viewed_id)
 );
 
 CREATE INDEX idx_views_viewer ON profile_views(viewer_id);
