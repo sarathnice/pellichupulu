@@ -1,23 +1,17 @@
 {
-  "name": "pellichupulu",
-  "version": "2.0.0",
+  "name": "pellichupulu-v2-3-ai",
+  "version": "2.3.0",
   "type": "module",
   "scripts": {
-    "dev": "wrangler dev",
-    "deploy": "wrangler deploy",
-    "db:create": "wrangler d1 create pellichupulu-db",
-    "db:schema": "wrangler d1 execute pellichupulu-db --file=./db/schema.sql --remote",
-    "db:seed": "wrangler d1 execute pellichupulu-db --file=./db/seed.sql --remote",
-    "db:studio": "wrangler d1 execute pellichupulu-db --local",
-    "typegen": "drizzle-kit generate:sqlite"
+    "dev": "vite",
+    "build": "vite build"
   },
   "dependencies": {
-    "drizzle-orm": "^0.30.10"
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
   },
   "devDependencies": {
-    "@cloudflare/workers-types": "^4.20240405.0",
-    "drizzle-kit": "^0.20.14",
-    "typescript": "^5.4.5",
-    "wrangler": "^3.57.0"
+    "@vitejs/plugin-react": "^4.2.1",
+    "vite": "^5.0.0"
   }
 }
