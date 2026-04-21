@@ -8,6 +8,7 @@ Features:
 ✓ All client-side, uploads to R2
 
 Deploy:
-npx wrangler deploy
-npm i && npm run build
-npx wrangler pages deploy dist --project-name=pellichupulu
+1. Install dependencies: npm install
+2. Deploy API worker: npm run deploy:worker
+3. Build frontend: npm run build
+4. Deploy frontend to Pages: npm run deploy:pages
