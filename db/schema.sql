@@ -30,11 +30,11 @@ CREATE TABLE IF NOT EXISTS users (
   FOREIGN KEY (referred_by) REFERENCES users(id) ON DELETE SET NULL
 );
 
-CREATE INDEX idx_users_email ON users(email);
-CREATE INDEX idx_users_google_id ON users(google_id);
-CREATE INDEX idx_users_phone ON users(phone);
-CREATE INDEX idx_users_referral ON users(referral_code);
-CREATE INDEX idx_users_status ON users(status);
+CREATE INDEX IF NOT EXISTS idx_users_email ON users(email);
+CREATE INDEX IF NOT EXISTS idx_users_google_id ON users(google_id);
+CREATE INDEX IF NOT EXISTS idx_users_phone ON users(phone);
+CREATE INDEX IF NOT EXISTS idx_users_referral ON users(referral_code);
+CREATE INDEX IF NOT EXISTS idx_users_status ON users(status);
 
 -- -----------------------------------------------------
 -- Table: profiles
@@ -112,14 +112,14 @@ CREATE TABLE IF NOT EXISTS profiles (
   FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
 
-CREATE INDEX idx_profiles_user_id ON profiles(user_id);
-CREATE INDEX idx_profiles_gender ON profiles(gender);
-CREATE INDEX idx_profiles_age ON profiles(age);
-CREATE INDEX idx_profiles_location ON profiles(current_country, current_city);
-CREATE INDEX idx_profiles_verified ON profiles(verified);
-CREATE INDEX idx_profiles_active ON profiles(is_active, last_active_at);
-CREATE INDEX idx_profiles_premium ON profiles(is_premium);
-CREATE INDEX idx_profiles_visa ON profiles(visa_status);
+CREATE INDEX IF NOT EXISTS idx_profiles_user_id ON profiles(user_id);
+CREATE INDEX IF NOT EXISTS idx_profiles_gender ON profiles(gender);
+CREATE INDEX IF NOT EXISTS idx_profiles_age ON profiles(age);
+CREATE INDEX IF NOT EXISTS idx_profiles_location ON profiles(current_country, current_city);
+CREATE INDEX IF NOT EXISTS idx_profiles_verified ON profiles(verified);
+CREATE INDEX IF NOT EXISTS idx_profiles_active ON profiles(is_active, last_active_at);
+CREATE INDEX IF NOT EXISTS idx_profiles_premium ON profiles(is_premium);
+CREATE INDEX IF NOT EXISTS idx_profiles_visa ON profiles(visa_status);
 
 -- -----------------------------------------------------
 -- Table: connections
@@ -141,10 +141,10 @@ CREATE TABLE IF NOT EXISTS connections (
   UNIQUE(requester_id, receiver_id)
 );
 
-CREATE INDEX idx_connections_requester ON connections(requester_id);
-CREATE INDEX idx_connections_receiver ON connections(receiver_id);
-CREATE INDEX idx_connections_status ON connections(status);
-CREATE INDEX idx_connections_created ON connections(created_at);
+CREATE INDEX IF NOT EXISTS idx_connections_requester ON connections(requester_id);
+CREATE INDEX IF NOT EXISTS idx_connections_receiver ON connections(receiver_id);
+CREATE INDEX IF NOT EXISTS idx_connections_status ON connections(status);
+CREATE INDEX IF NOT EXISTS idx_connections_created ON connections(created_at);
 
 -- -----------------------------------------------------
 -- Table: messages
@@ -167,10 +167,10 @@ CREATE TABLE IF NOT EXISTS messages (
   FOREIGN KEY (reply_to_id) REFERENCES messages(id) ON DELETE SET NULL
 );
 
-CREATE INDEX idx_messages_connection ON messages(connection_id);
-CREATE INDEX idx_messages_sender ON messages(sender_id);
-CREATE INDEX idx_messages_created ON messages(created_at);
-CREATE INDEX idx_messages_unread ON messages(connection_id, is_read);
+CREATE INDEX IF NOT EXISTS idx_messages_connection ON messages(connection_id);
+CREATE INDEX IF NOT EXISTS idx_messages_sender ON messages(sender_id);
+CREATE INDEX IF NOT EXISTS idx_messages_created ON messages(created_at);
+CREATE INDEX IF NOT EXISTS idx_messages_unread ON messages(connection_id, is_read);
 
 -- -----------------------------------------------------
 -- Table: referrals
@@ -193,9 +193,9 @@ CREATE TABLE IF NOT EXISTS referrals (
   FOREIGN KEY (friend_user_id) REFERENCES users(id) ON DELETE SET NULL
 );
 
-CREATE INDEX idx_referrals_code ON referrals(code);
-CREATE INDEX idx_referrals_referrer ON referrals(referrer_id);
-CREATE INDEX idx_referrals_friend ON referrals(friend_user_id);
+CREATE INDEX IF NOT EXISTS idx_referrals_code ON referrals(code);
+CREATE INDEX IF NOT EXISTS idx_referrals_referrer ON referrals(referrer_id);
+CREATE INDEX IF NOT EXISTS idx_referrals_friend ON referrals(friend_user_id);
 
 -- -----------------------------------------------------
 -- Table: verifications
@@ -217,9 +217,9 @@ CREATE TABLE IF NOT EXISTS verifications (
   FOREIGN KEY (reviewed_by) REFERENCES users(id) ON DELETE SET NULL
 );
 
-CREATE INDEX idx_verifications_user ON verifications(user_id);
-CREATE INDEX idx_verifications_status ON verifications(status);
-CREATE INDEX idx_verifications_type ON verifications(verification_type);
+CREATE INDEX IF NOT EXISTS idx_verifications_user ON verifications(user_id);
+CREATE INDEX IF NOT EXISTS idx_verifications_status ON verifications(status);
+CREATE INDEX IF NOT EXISTS idx_verifications_type ON verifications(verification_type);
 
 -- -----------------------------------------------------
 -- Table: subscriptions
@@ -240,9 +240,9 @@ CREATE TABLE IF NOT EXISTS subscriptions (
   FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
 
-CREATE INDEX idx_subscriptions_user ON subscriptions(user_id);
-CREATE INDEX idx_subscriptions_status ON subscriptions(status);
-CREATE INDEX idx_subscriptions_stripe ON subscriptions(stripe_customer_id);
+CREATE INDEX IF NOT EXISTS idx_subscriptions_user ON subscriptions(user_id);
+CREATE INDEX IF NOT EXISTS idx_subscriptions_status ON subscriptions(status);
+CREATE INDEX IF NOT EXISTS idx_subscriptions_stripe ON subscriptions(stripe_customer_id);
 
 -- -----------------------------------------------------
 -- Table: payments
@@ -262,8 +262,8 @@ CREATE TABLE IF NOT EXISTS payments (
   FOREIGN KEY (subscription_id) REFERENCES subscriptions(id) ON DELETE SET NULL
 );
 
-CREATE INDEX idx_payments_user ON payments(user_id);
-CREATE INDEX idx_payments_status ON payments(status);
+CREATE INDEX IF NOT EXISTS idx_payments_user ON payments(user_id);
+CREATE INDEX IF NOT EXISTS idx_payments_status ON payments(status);
 
 -- -----------------------------------------------------
 -- Table: user_preferences
@@ -305,8 +305,8 @@ CREATE TABLE IF NOT EXISTS profile_views (
   UNIQUE(viewer_id, viewed_id)
 );
 
-CREATE INDEX idx_views_viewer ON profile_views(viewer_id);
-CREATE INDEX idx_views_viewed ON profile_views(viewed_id);
+CREATE INDEX IF NOT EXISTS idx_views_viewer ON profile_views(viewer_id);
+CREATE INDEX IF NOT EXISTS idx_views_viewed ON profile_views(viewed_id);
 
 -- -----------------------------------------------------
 -- Table: blocks_reports
@@ -326,8 +326,8 @@ CREATE TABLE IF NOT EXISTS blocks_reports (
   FOREIGN KEY (reported_id) REFERENCES users(id) ON DELETE CASCADE
 );
 
-CREATE INDEX idx_blocks_reporter ON blocks_reports(reporter_id);
-CREATE INDEX idx_blocks_reported ON blocks_reports(reported_id);
+CREATE INDEX IF NOT EXISTS idx_blocks_reporter ON blocks_reports(reporter_id);
+CREATE INDEX IF NOT EXISTS idx_blocks_reported ON blocks_reports(reported_id);
 
 -- -----------------------------------------------------
 -- Table: notifications
@@ -346,8 +346,8 @@ CREATE TABLE IF NOT EXISTS notifications (
   FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
 
-CREATE INDEX idx_notifications_user ON notifications(user_id, is_read);
-CREATE INDEX idx_notifications_created ON notifications(created_at);
+CREATE INDEX IF NOT EXISTS idx_notifications_user ON notifications(user_id, is_read);
+CREATE INDEX IF NOT EXISTS idx_notifications_created ON notifications(created_at);
 
 -- -----------------------------------------------------
 -- Table: admin_logs
@@ -365,24 +365,24 @@ CREATE TABLE IF NOT EXISTS admin_logs (
   FOREIGN KEY (admin_id) REFERENCES users(id) ON DELETE CASCADE
 );
 
-CREATE INDEX idx_admin_logs_admin ON admin_logs(admin_id);
-CREATE INDEX idx_admin_logs_created ON admin_logs(created_at);
+CREATE INDEX IF NOT EXISTS idx_admin_logs_admin ON admin_logs(admin_id);
+CREATE INDEX IF NOT EXISTS idx_admin_logs_created ON admin_logs(created_at);
 
 -- =====================================================
 -- SEED DATA - Sample admin user
 -- =====================================================
-INSERT INTO users (id, email, first_name, last_name, role, status, email_verified) 
+INSERT OR IGNORE INTO users (id, email, first_name, last_name, role, status, email_verified) 
 VALUES (1, 'admin@pellichupulu.ai', 'Admin', 'User', 'admin', 'active', 1);
 
-INSERT INTO users (id, email, first_name, last_name, referral_code, status, email_verified)
+INSERT OR IGNORE INTO users (id, email, first_name, last_name, referral_code, status, email_verified)
 VALUES 
   (2, 'demo@pellichupulu.ai', 'Demo', 'User', 'DEMO001', 'active', 1);
 
-INSERT INTO profiles (user_id, gender, age, current_city, current_country, profession, verified, profile_completion)
+INSERT OR IGNORE INTO profiles (user_id, gender, age, current_city, current_country, profession, verified, profile_completion)
 VALUES 
   (2, 'female', 28, 'Dallas', 'USA', 'Software Engineer', 1, 85);
 
-INSERT INTO subscriptions (user_id, plan, status, current_period_end)
+INSERT OR IGNORE INTO subscriptions (user_id, plan, status, current_period_end)
 VALUES 
   (1, 'elite', 'active', datetime('now', '+1 year')),
   (2, 'premium', 'active', datetime('now', '+30 days'));
