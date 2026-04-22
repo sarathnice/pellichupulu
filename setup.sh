@@ -24,7 +24,7 @@ npx wrangler login
 # Create D1
 echo ""
 echo "3/5 Creating D1 database..."
-npx wrangler d1 create pellichupulu-db
+npx wrangler d1 create pellichupulu-v2
 
 echo ""
 echo "⚠️  COPY the database_id above!"
@@ -36,13 +36,14 @@ read -p "Press Enter when done..."
 
 # Create schema
 echo ""
-echo "5/5 Creating database schema..."
-npm run db:schema
+echo "5/5 Applying database migrations..."
+npm run db:migrate:remote
 
 echo ""
 echo "✅ Setup complete!"
 echo ""
 echo "Next steps:"
 echo "1. Update wrangler.toml with your IDs"
-echo "2. Run: npm run deploy"
+echo "2. Run: npm run deploy:worker"
+echo "3. Run: npm run build && npm run deploy:pages"
 echo "3. Setup GitHub secrets for auto-deploy"

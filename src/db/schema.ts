@@ -2,7 +2,7 @@
 // Drizzle ORM schema for Cloudflare D1
 // Type-safe database access
 
-import { sqliteTable, text, integer, primaryKey } from 'drizzle-orm/sqlite-core';
+import { sqliteTable, text, integer } from 'drizzle-orm/sqlite-core';
 import { sql } from 'drizzle-orm';
 
 // Users table
@@ -140,6 +140,21 @@ export const referrals = sqliteTable('referrals', {
   expiresAt: text('expires_at'),
 });
 
+// Verifications table
+export const verifications = sqliteTable('verifications', {
+  id: integer('id').primaryKey({ autoIncrement: true }),
+  userId: integer('user_id').notNull().references(() => users.id, { onDelete: 'cascade' }),
+  verificationType: text('verification_type', { enum: ['email', 'phone', 'government_id', 'video', 'linkedin', 'education', 'employment'] }).notNull(),
+  documentUrl: text('document_url'),
+  documentType: text('document_type'),
+  status: text('status', { enum: ['pending', 'approved', 'rejected', 'expired'] }).default('pending'),
+  reviewedBy: integer('reviewed_by').references(() => users.id),
+  reviewedAt: text('reviewed_at'),
+  rejectionReason: text('rejection_reason'),
+  expiresAt: text('expires_at'),
+  createdAt: text('created_at').default(sql`datetime('now')`),
+});
+
 // Subscriptions table
 export const subscriptions = sqliteTable('subscriptions', {
   id: integer('id').primaryKey({ autoIncrement: true }),
@@ -169,6 +184,74 @@ export const payments = sqliteTable('payments', {
   createdAt: text('created_at').default(sql`datetime('now')`),
 });
 
+// User preferences table
+export const userPreferences = sqliteTable('user_preferences', {
+  id: integer('id').primaryKey({ autoIncrement: true }),
+  userId: integer('user_id').notNull().references(() => users.id, { onDelete: 'cascade' }).unique(),
+  ageMin: integer('age_min').default(18),
+  ageMax: integer('age_max').default(60),
+  heightMinCm: integer('height_min_cm'),
+  heightMaxCm: integer('height_max_cm'),
+  religions: text('religions'),
+  castes: text('castes'),
+  locations: text('locations'),
+  educationLevels: text('education_levels'),
+  professions: text('professions'),
+  dietPreferences: text('diet_preferences'),
+  maritalStatuses: text('marital_statuses'),
+  visaStatuses: text('visa_statuses'),
+  showVerifiedOnly: integer('show_verified_only', { mode: 'boolean' }).default(false),
+  showPremiumOnly: integer('show_premium_only', { mode: 'boolean' }).default(false),
+  createdAt: text('created_at').default(sql`datetime('now')`),
+  updatedAt: text('updated_at').default(sql`datetime('now')`),
+});
+
+// Profile views table
+export const profileViews = sqliteTable('profile_views', {
+  id: integer('id').primaryKey({ autoIncrement: true }),
+  viewerId: integer('viewer_id').notNull().references(() => users.id, { onDelete: 'cascade' }),
+  viewedId: integer('viewed_id').notNull().references(() => users.id, { onDelete: 'cascade' }),
+  createdAt: text('created_at').default(sql`datetime('now')`),
+});
+
+// Blocks and reports table
+export const blocksReports = sqliteTable('blocks_reports', {
+  id: integer('id').primaryKey({ autoIncrement: true }),
+  reporterId: integer('reporter_id').notNull().references(() => users.id, { onDelete: 'cascade' }),
+  reportedId: integer('reported_id').notNull().references(() => users.id, { onDelete: 'cascade' }),
+  type: text('type', { enum: ['block', 'report'] }),
+  reason: text('reason'),
+  details: text('details'),
+  status: text('status', { enum: ['pending', 'reviewed', 'actioned', 'dismissed'] }).default('pending'),
+  createdAt: text('created_at').default(sql`datetime('now')`),
+  reviewedAt: text('reviewed_at'),
+});
+
+// Notifications table
+export const notifications = sqliteTable('notifications', {
+  id: integer('id').primaryKey({ autoIncrement: true }),
+  userId: integer('user_id').notNull().references(() => users.id, { onDelete: 'cascade' }),
+  type: text('type').notNull(),
+  title: text('title').notNull(),
+  message: text('message'),
+  data: text('data'),
+  isRead: integer('is_read', { mode: 'boolean' }).default(false),
+  readAt: text('read_at'),
+  createdAt: text('created_at').default(sql`datetime('now')`),
+});
+
+// Admin logs table
+export const adminLogs = sqliteTable('admin_logs', {
+  id: integer('id').primaryKey({ autoIncrement: true }),
+  adminId: integer('admin_id').notNull().references(() => users.id, { onDelete: 'cascade' }),
+  action: text('action').notNull(),
+  targetType: text('target_type'),
+  targetId: integer('target_id'),
+  details: text('details'),
+  ipAddress: text('ip_address'),
+  createdAt: text('created_at').default(sql`datetime('now')`),
+});
+
 // Export types
 export type User = typeof users.$inferSelect;
 export type NewUser = typeof users.$inferInsert;
@@ -176,3 +259,6 @@ export type Profile = typeof profiles.$inferSelect;
 export type NewProfile = typeof profiles.$inferInsert;
 export type Connection = typeof connections.$inferSelect;
 export type Message = typeof messages.$inferSelect;
+export type Verification = typeof verifications.$inferSelect;
+export type UserPreference = typeof userPreferences.$inferSelect;
+export type AdminLog = typeof adminLogs.$inferSelect;
