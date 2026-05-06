@@ -1,0 +1,36 @@
+{
+  "name": "pellichupulu",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "deploy:api": "wrangler deploy",
+    "deploy:dev": "wrangler deploy --env dev",
+    "deploy:stage": "wrangler deploy --env staging",
+    "deploy:prod": "wrangler deploy",
+    "deploy:pages": "npm run build && wrangler pages deploy out --project-name pellichupulu --commit-dirty=true",
+    "db:migrate": "wrangler d1 execute pellichupulu-v2 --file=./schema.sql --remote",
+    "test:staging": "node ./scripts/staging-smoke-test.mjs",
+    "test:preprod": "node ./scripts/preprod-gate.mjs",
+    "test:stage:gate": "node ./scripts/preprod-gate.mjs",
+    "test:preprod:windows": "run-preprod-gate.cmd"
+  },
+  "dependencies": {
+    "@cloudflare/workers-types": "^4.20260426.1",
+    "lucide-react": "^0.468.0",
+    "next": "^15.0.3",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "25.6.0",
+    "@types/react": "^19.0.1",
+    "@types/react-dom": "^19.0.2",
+    "autoprefixer": "^10.4.20",
+    "postcss": "^8.4.49",
+    "tailwindcss": "^3.4.16",
+    "typescript": "^5.7.2",
+    "wrangler": "^3.91.0"
+  }
+}

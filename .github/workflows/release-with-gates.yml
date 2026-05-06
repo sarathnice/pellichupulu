@@ -1,0 +1,86 @@
+name: release-with-gates
+
+on:
+  workflow_dispatch:
+    inputs:
+      target_env:
+        description: Deployment target
+        required: true
+        default: prod
+        type: choice
+        options:
+          - dev
+          - stage
+          - prod
+
+jobs:
+  deploy-dev:
+    if: ${{ github.event.inputs.target_env == 'dev' }}
+    runs-on: ubuntu-latest
+    env:
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN_NONPROD }}
+      CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: npm ci
+      - run: npm run deploy:dev
+
+  gate-stage:
+    if: ${{ github.event.inputs.target_env == 'stage' || github.event.inputs.target_env == 'prod' }}
+    runs-on: ubuntu-latest
+    env:
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN_NONPROD }}
+      CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+      STAGING_API_URL: ${{ secrets.STAGING_API_URL }}
+      TURNSTILE_BYPASS_TOKEN: ${{ secrets.TURNSTILE_BYPASS_TOKEN }}
+      WORKER_ENV: staging
+      D1_DATABASE: pellichupulu-staging
+      GATE_LABEL: STAGE
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: npm ci
+      - run: node ./scripts/preprod-gate.mjs
+      - name: Upload stage gate report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: stage-gate-report
+          path: outputs/preprod-gate-report-*.md
+          if-no-files-found: warn
+
+  deploy-stage:
+    if: ${{ github.event.inputs.target_env == 'stage' }}
+    needs: gate-stage
+    runs-on: ubuntu-latest
+    env:
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN_NONPROD }}
+      CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: npm ci
+      - run: npm run deploy:stage
+
+  deploy-prod:
+    if: ${{ github.event.inputs.target_env == 'prod' }}
+    needs: gate-stage
+    runs-on: ubuntu-latest
+    environment: production
+    env:
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN_PROD }}
+      CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: npm ci
+      - run: npm run deploy:prod
